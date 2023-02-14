@@ -1,4 +1,4 @@
-package com.grevicoc.technicalgli.outbounds.models.response;
+package com.grevicoc.technicalgli.outbounds;
 
 import lombok.Data;
 
