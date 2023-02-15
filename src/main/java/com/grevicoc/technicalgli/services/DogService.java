@@ -1,9 +1,9 @@
 package com.grevicoc.technicalgli.services;
 
-import com.grevicoc.technicalgli.models.entity.Dog;
+import com.grevicoc.technicalgli.models.entity.Breed;
 
 import java.util.List;
 
 public interface DogService {
-    public List<Dog> getAllBreeds();
+    public List<Breed> getAllBreeds();
 }

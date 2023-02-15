@@ -11,12 +11,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 public class BeanConfiguration {
-    @Autowired
-    DogClient dogClient;
-
-    @Autowired
-    DogConfig dogConfig;
-
     @Bean(name = "dogWebClient")
     public WebClient dogWebClient(DogConfig dogConfig) {
         WebClient client = WebClient.builder()
