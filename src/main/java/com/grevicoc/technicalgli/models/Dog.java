@@ -1,5 +1,8 @@
 package com.grevicoc.technicalgli.models;
 
+import java.util.List;
 
-public class Dog {
+public interface Dog {
+    List<String> getImages();
+    List<String> getNames();
 }
