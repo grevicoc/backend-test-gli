@@ -28,6 +28,12 @@ public class FactoryDog {
                         .subBreeds(subBreeds)
                         .images(images)
                         .build();
+            case "shiba":
+                return ShibaDog.builder()
+                        .breed(breed)
+                        .subBreeds(subBreeds)
+                        .images(images)
+                        .build();
             default:
                 return NormalDog.builder()
                         .breed(breed)

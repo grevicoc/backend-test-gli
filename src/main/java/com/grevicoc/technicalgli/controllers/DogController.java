@@ -1,19 +1,23 @@
 package com.grevicoc.technicalgli.controllers;
 
-import com.grevicoc.technicalgli.models.FactoryDog;
-import com.grevicoc.technicalgli.models.dao.Breed;
 import com.grevicoc.technicalgli.models.dto.BaseResponse;
 import com.grevicoc.technicalgli.services.BreedService;
+import com.grevicoc.technicalgli.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class DogController {
     @Autowired
     private BreedService breedService;
+
+    @Autowired
+    private ImageService imageService;
 
     @GetMapping("/dog")
     public BaseResponse<List<String>> getAllDogs(){
@@ -27,10 +31,26 @@ public class DogController {
         return retval;
     }
 
-    public int getDogImages(){
-        //ketika shiba maka ambil image yang ganjil aja
-        //ketika terrier maka balikin anak-anaknya plus image yg relevan
-        return  1;
+    @GetMapping("/dog/{breed}/images")
+    public BaseResponse<Map<String,List<String>>> getDogImages(@PathVariable String breed){
+        try {
+            Map<String,List<String>> data = imageService.getImagesOf(breed);
+            BaseResponse<Map<String,List<String>>> retval = BaseResponse.<Map<String,List<String>>>builder()
+                    .code(200)
+                    .status("success")
+                    .message("GET operation is success!")
+                    .data(data)
+                    .build();
+            return retval;
+        } catch (Exception e) {
+            BaseResponse<Map<String,List<String>>> retval = BaseResponse.<Map<String,List<String>>>builder()
+                    .code(500)
+                    .status("error")
+                    .message(e.getMessage())
+                    .data(null)
+                    .build();
+            return retval;
+        }
     }
 
     //subBreeds dan images optional

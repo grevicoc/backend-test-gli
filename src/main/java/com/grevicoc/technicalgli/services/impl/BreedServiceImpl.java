@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class BreedServiceImpl implements BreedService {
 
         //get breeds from outbounds
         List<String> retval = new ArrayList<>();
-        BaseResponse<HashMap<String,List<String>>> dogResponse = dogClient.getAllBreeds();
+        BaseResponse<Map<String,List<String>>> dogResponse = dogClient.getAllBreeds();
         for (Map.Entry<String,List<String>> entry: dogResponse.getMessage().entrySet()){
             Dog tempDog = factoryDog.createDog(entry.getKey(), entry.getValue(), new ArrayList<>());
             tempDog.getNames().stream().forEach(name -> {
