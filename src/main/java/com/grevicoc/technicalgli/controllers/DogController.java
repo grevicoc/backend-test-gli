@@ -17,15 +17,12 @@ public class DogController {
 
     @GetMapping("/dog")
     public BaseResponse<List<String>> getAllDogs(){
-        //ketika ada sheepdog dibikin sheepdog tersebut sekalian sama anak-anaknya.
         List<String> data = breedService.getAllBreeds();
-
-
         BaseResponse<List<String>> retval = BaseResponse.<List<String>>builder()
                 .code(200)
                 .status("success")
                 .message("GET operation is success!")
-                .data(null)
+                .data(data)
                 .build();
         return retval;
     }

@@ -23,11 +23,10 @@ public class BreedServiceImpl implements BreedService {
     @Autowired
     private BreedRepository breedRepository;
 
-    @Autowired
-    private FactoryDog factoryDog;
-
     @Override
     public List<String> getAllBreeds() {
+        FactoryDog factoryDog = FactoryDog.getInstance();
+
         //get breeds from outbounds
         List<String> retval = new ArrayList<>();
         BaseResponse<HashMap<String,List<String>>> dogResponse = dogClient.getAllBreeds();
@@ -37,13 +36,14 @@ public class BreedServiceImpl implements BreedService {
                 retval.add(name);
             });
         }
-        System.out.println(retval.toString());
 
         //get breeds from database
-//        List<Breed> breeds = breedRepository.findAll();
-//        System.out.println(breeds.toString());
+        List<Breed> breeds = breedRepository.findAll();
+        for (Breed breed: breeds){
+            Dog tempDog = factoryDog.createDog(breed.getName(), new ArrayList<>(), new ArrayList<>());
+            retval.add(tempDog.getNames().get(0));
+        }
 
-        //merge them
-        return null;
+        return retval;
     }
 }
