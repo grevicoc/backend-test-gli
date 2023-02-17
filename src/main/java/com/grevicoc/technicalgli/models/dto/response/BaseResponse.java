@@ -1,4 +1,4 @@
-package com.grevicoc.technicalgli.models.dto;
+package com.grevicoc.technicalgli.models.dto.response;
 
 import lombok.Builder;
 import lombok.Data;

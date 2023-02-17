@@ -1,12 +1,12 @@
 package com.grevicoc.technicalgli.controllers;
 
-import com.grevicoc.technicalgli.models.dto.BaseResponse;
+import com.grevicoc.technicalgli.models.dto.request.AddDogRequest;
+import com.grevicoc.technicalgli.models.dto.request.UpdateDogRequest;
+import com.grevicoc.technicalgli.models.dto.response.BaseResponse;
 import com.grevicoc.technicalgli.services.BreedService;
 import com.grevicoc.technicalgli.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -53,16 +53,62 @@ public class DogController {
         }
     }
 
-    //subBreeds dan images optional
-    public int addDog(String breed, List<String> subBreeds, List<String> images){
-        return  1;
+    @PostMapping("/dog")
+    public BaseResponse<Object> addDog(@RequestBody AddDogRequest addDogRequest){
+        try {
+            breedService.addNewBreed(addDogRequest.getBreed(), addDogRequest.getSubBreeds()
+                    , addDogRequest.getImages());
+            BaseResponse<Object> retval = BaseResponse.<Object>builder()
+                    .code(200)
+                    .status("success")
+                    .message("POST operation is success!")
+                    .data(null)
+                    .build();
+            return retval;
+        } catch (Exception e){
+            BaseResponse<Object> retval = BaseResponse.<Object>builder()
+                    .code(500)
+                    .status("error")
+                    .message(e.getMessage())
+                    .data(null)
+                    .build();
+            return retval;
+        }
     }
 
-    public int updateDog(int id, String breed, List<String> subBreeds, List<String> images){
-        return 1;
+    @PutMapping("/dog/{id}")
+    public BaseResponse<Object> updateDog(@PathVariable Long id, @RequestBody UpdateDogRequest updateDogRequest){
+        try {
+            breedService.updateBreed(id, updateDogRequest.getBreed(),
+                    updateDogRequest.getSubBreeds(), updateDogRequest.getImages());
+            BaseResponse<Object> retval = BaseResponse.<Object>builder()
+                    .code(200)
+                    .status("success")
+                    .message("PUT operation is success!")
+                    .data(null)
+                    .build();
+            return retval;
+        } catch (Exception e){
+            BaseResponse<Object> retval = BaseResponse.<Object>builder()
+                    .code(404)
+                    .status("error")
+                    .message(e.getMessage())
+                    .data(null)
+                    .build();
+            return retval;
+        }
     }
 
-    public int deleteDog(int id){
-        return 1;
+    @DeleteMapping("/dog/{id}")
+    public BaseResponse<Object> deleteDog(@PathVariable Long id){
+        breedService.deleteBreed(id);
+
+        BaseResponse<Object> retval = BaseResponse.<Object>builder()
+                .code(200)
+                .status("success")
+                .message("DELETE operation is success!")
+                .data(null)
+                .build();
+        return retval;
     }
 }

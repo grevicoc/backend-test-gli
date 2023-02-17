@@ -11,7 +11,9 @@ CREATE TABLE sub_breeds (
     sub_breed varchar(20),
     id_breed number,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_breed) REFERENCES breeds(id)
+    FOREIGN KEY (id_breed)
+        REFERENCES breeds(id)
+        ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS images;
@@ -20,5 +22,7 @@ CREATE TABLE images(
     source varchar(255),
     id_breed number,
     PRIMARY KEY (id),
-    FOREIGN KEY (id_breed) REFERENCES breeds(id)
+    FOREIGN KEY (id_breed)
+        REFERENCES breeds(id)
+        ON DELETE CASCADE
 );
